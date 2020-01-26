@@ -8,15 +8,27 @@ import './App.css'
 
 function App() {
   const [movies, setMovies] = useState([])
+  const [shows, setShows] = useState([])
+  const [family, setFamily] = useState([])
+  const [documentary, setDocumentary] = useState([])
   const [filmId, setFilmId] = useState('')
+  const [type, setType] = useState('')
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios
-          .get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}`)
+        let response = await axios
+          .get(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}`)
           setMovies(response.data.results)
-          //.get(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}`)
+        response = await axios
+          .get(`https://api.themoviedb.org/3/discover/tv?sort_by=popularity.desc&api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}`)
+        setShows(response.data.results)
+        response = await axios
+          .get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}&sort_by=popularity.desc&with_genres=10751`)
+        setFamily(response.data.results)
+        response = await axios
+          .get(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}&sort_by=popularity.desc&with_genres=99`)
+        setDocumentary(response.data.results)
       } catch (error) {
         console.log(error)
       }
@@ -31,19 +43,34 @@ function App() {
   }
 
   const filmHandler = (event) => {
+    console.log('film handler: ', event.target.dataset)
+    setType(event.target.dataset.type)
     setFilmId(event.target.id)
   }
 
   if(filmId) {
-    return <Film filmId={filmId}/>
+    return <Film filmId={filmId} type={type}/>
   } else {
     return (
       <div className="App">
+        {/* TODO remove */}
         <span>Window size: {width} x {height}</span>
         <main>
           <h3>Popular Movies</h3>
           <div style={statisticStyle}>
-            <Movies movies={movies} width={width} handler={filmHandler}/>
+            <Movies type='movie' movies={movies} width={width} handler={filmHandler}/>
+          </div>
+          <h3>Popular Series</h3>
+          <div style={statisticStyle}>
+            <Movies type='tv' movies={shows} width={width} handler={filmHandler}/>
+          </div>
+          <h3>Family</h3>
+          <div style={statisticStyle}>
+            <Movies type='movie' movies={family} width={width} handler={filmHandler}/>
+          </div>
+          <h3>Documentary</h3>
+          <div style={statisticStyle}>
+            <Movies type='tv' movies={documentary} width={width} handler={filmHandler}/>
           </div>
         </main>
       </div>

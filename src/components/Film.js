@@ -3,11 +3,11 @@ import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 
-const Film = ({filmId}) => {
+const Film = ({filmId, type}) => {
   const [film, setFilm] = useState()
   const imageBaseUrl = 'http://image.tmdb.org/t/p/w342/'
   useEffect(() => {
-    const baseFilmUrl = `https://api.themoviedb.org/3/movie/${filmId}?api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}`
+    const baseFilmUrl = `https://api.themoviedb.org/3/${type}/${filmId}?api_key=${process.env.REACT_APP_MOVIE_BROWSER_API_KEY}`
     const fetchFilm = async () => {
       try {
         const response = await axios.get(baseFilmUrl)
@@ -17,23 +17,23 @@ const Film = ({filmId}) => {
       }
     }
     fetchFilm()
-  }, [filmId])
+  }, [filmId, type])
 
   if(film) {
     return (
       <div className='flex-container' >
-        <div className='card-body flex-item' >
+        <section className='card-body flex-item' >
           <h3>{film.title}</h3>
           <p>{film.overview}</p>
-          <div>
+          <span>
             {film.genres.map(g => {
               return g.name
             }).join(', ')}
-            <p>{film.release_date}</p>
-            <p>{film.homepage}</p>
-          </div>
+          </span>
+          <p>{film.release_date}</p>
+          <p><a href={film.homepage}>{film.homepage}</a></p>
           <Button variant="secondary">Play</Button>{' '}
-        </div>
+        </section>
         <div className='flex-item'>
           <Image src={`${imageBaseUrl}${film.backdrop_path}`} />
         </div>
