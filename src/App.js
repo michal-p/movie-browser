@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Movies from './components/Movies'
-import Alert from 'react-bootstrap/Alert';
-import { useWindowSize } from './utils/events_helper'
+import Film from './components/Film'
+import helperEvents from './utils/events_helper'
 
 import './App.css'
 
 function App() {
-  const [ movies, setMovies ] = useState([])
+  const [movies, setMovies] = useState([])
+  const [filmId, setFilmId] = useState('')
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -23,26 +24,31 @@ function App() {
     fetchMovies()
   }, [])
   
-  const [width, height] = useWindowSize()
+  const [width, height] = helperEvents.useWindowSize()
 
   const statisticStyle = {
     padding: 0,
   }
 
-  return (
-    <div className="App">
-      <span>Window size: {width} x {height}</span>
-      <main>
-        <Alert key='primary' variant='danger'>
-          This is a alert—check it out!
-        </Alert>
-        <h3>Popular Movies</h3>
-        <div style={statisticStyle}>
-          <Movies movies={movies} width={width} handler={() => onclick(alert('bubu'))}/>
-        </div>
-      </main>
-    </div>
-  )
+  const filmHandler = (event) => {
+    setFilmId(event.target.id)
+  }
+
+  if(filmId) {
+    return <Film filmId={filmId}/>
+  } else {
+    return (
+      <div className="App">
+        <span>Window size: {width} x {height}</span>
+        <main>
+          <h3>Popular Movies</h3>
+          <div style={statisticStyle}>
+            <Movies movies={movies} width={width} handler={filmHandler}/>
+          </div>
+        </main>
+      </div>
+    )
+  }
 }
 
 export default App
