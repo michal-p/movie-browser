@@ -5,7 +5,7 @@ import _ from 'lodash'
 
 const Movies = ({ movies, width, handler }) => {
   const image = { width: 171, height: 180 }
-  const chunksAmount = Math.floor(width * 0.8 / image.width) 
+  const chunksAmount = Math.floor(width * 0.85 / image.width) 
   const imageBaseUrl = 'http://image.tmdb.org/t/p/w342/'
   const moviesChunks = _.chunk(movies, chunksAmount)
 
