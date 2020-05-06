@@ -3,6 +3,7 @@ import axios from 'axios'
 import Movies from './components/Movies'
 import Film from './components/Film'
 import helperEvents from './utils/events_helper'
+import Notification from './components/Notification'
 import './App.css'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   const [documentary, setDocumentary] = useState([])
   const [filmId, setFilmId] = useState('')
   const [type, setType] = useState('')
+  const [notification, setNotification] = useState({})
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -33,7 +35,7 @@ function App() {
         )
         setDocumentary(response.data.results)
       } catch (error) {
-        console.log(error)
+        setNotification(helperEvents.onError(error, 'error'))
       }
     }
     fetchMovies()
@@ -46,7 +48,6 @@ function App() {
   }
 
   const filmHandler = (event) => {
-    console.log('film handler: ', event.target.dataset)
     setType(event.target.dataset.type)
     setFilmId(event.target.id)
   }
@@ -59,6 +60,10 @@ function App() {
         {/* TODO remove */}
         <span>
           Window size: {width} x {height}
+          <Notification
+            message={notification.message}
+            type={notification.type}
+          />
         </span>
         <main>
           <h3>Popular Movies</h3>

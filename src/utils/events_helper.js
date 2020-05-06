@@ -13,8 +13,10 @@ const useWindowSize = () => {
   return size
 }
 
-export default { useWindowSize }
+const onError = (error, type = 'note') => {
+  // Log the error.
+  console.error('Error code', error.code, 'object', error)
+  return { message: error, type: type }
+}
 
-// export {
-// 	useWindowSize
-// }
+export default { useWindowSize, onError }

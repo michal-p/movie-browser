@@ -37,11 +37,13 @@
   }
 }
 
-.carousel-control-next-icon, .carousel-control-prev-icon {
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
   background-color: black;
 }
 
-.carousel-control-prev, .carousel-control-next {
+.carousel-control-prev,
+.carousel-control-next {
   width: 8%;
 }
 
@@ -52,7 +54,7 @@
   justify-content: flex-start;
   align-content: stretch;
   align-items: flex-start;
-  }
+}
 
 .flex-item {
   align-self: auto;
@@ -74,4 +76,13 @@
   .flex-item:nth-child(1) {
     max-width: 100%;
   }
+}
+
+/* Notification classes */
+.notification--error {
+  color: red;
+}
+
+.notification--note {
+  color: green;
 }
