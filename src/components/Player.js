@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import shaka from 'shaka-player'
 import Notification from './Notification'
 
@@ -14,7 +14,7 @@ const Player = ({ url }) => {
     setNotification({ message: error, type: type })
   }
 
-  const initPlayer = async () => {
+  const initPlayer = useCallback(async () => {
     try {
       const player = new shaka.Player(videoRef.current)
       videoRef.current.requestFullscreen()
@@ -22,7 +22,7 @@ const Player = ({ url }) => {
     } catch (error) {
       onError(error)
     }
-  }
+  }, [url])
 
   useEffect(() => {
     if (shaka.Player.isBrowserSupported()) {
@@ -30,10 +30,9 @@ const Player = ({ url }) => {
       initPlayer()
     } else {
       // This browser does not have the minimum set of APIs we need.
-      console.error('Browser not supported!')
       onError('Browser not supported!', 'error')
     }
-  }, [])
+  }, [initPlayer])
 
   return (
     <>
