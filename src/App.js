@@ -4,6 +4,7 @@ import Movies from './components/Movies'
 import Film from './components/Film'
 import helperEvents from './utils/events_helper'
 import Notification from './components/Notification'
+import Search from './components/Search'
 import './App.css'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [filmId, setFilmId] = useState('')
   const [type, setType] = useState('')
   const [notification, setNotification] = useState({})
+  const [newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -52,54 +54,64 @@ function App() {
     setFilmId(event.target.id)
   }
 
+  const handleFilter = (event) => {
+    setNewFilter(event.target.value)
+  }
+
+  let filteredMovies = movies.filter(movie => movie.title.toUpperCase().includes(newFilter.toUpperCase()))
+  let filteredShows = shows.filter(show => show.name.toUpperCase().includes(newFilter.toUpperCase()))
+  let filteredFamily = family.filter(fam => fam.title.toUpperCase().includes(newFilter.toUpperCase()))
+  let filteredDocumentary = documentary.filter(doc => doc.name.toUpperCase().includes(newFilter.toUpperCase()))
+
   if (filmId) {
     return <Film filmId={filmId} type={type} />
   } else {
     return (
       <div className="App">
         {/* TODO remove */}
-        <span>
+        <p>
           Window size: {width} x {height}
           <Notification
             message={notification.message}
             type={notification.type}
           />
-        </span>
+        </p>
+        <Search value={newFilter} handler={handleFilter} />
         <main>
-          <h3>Popular Movies</h3>
           <div style={statisticStyle}>
             <Movies
               type="movie"
-              movies={movies}
+              movies={filteredMovies}
               width={width}
               handler={filmHandler}
+              name="Popular Movies"
             />
           </div>
-          <h3>Popular Series</h3>
           <div style={statisticStyle}>
             <Movies
               type="tv"
-              movies={shows}
+              movies={filteredShows}
               width={width}
               handler={filmHandler}
+              name="Popular Series"
             />
           </div>
-          <h3>Family</h3>
           <div style={statisticStyle}>
             <Movies
               type="movie"
-              movies={family}
+              movies={filteredFamily}
               width={width}
               handler={filmHandler}
+              name="Family"
             />
           </div>
-          <h3>Documentary</h3>
           <div style={statisticStyle}>
             <Movies
               type="tv"
-              movies={documentary}
+              movies={filteredDocumentary}
               width={width}
               handler={filmHandler}
+              name="Documentary"
             />
           </div>
         </main>
