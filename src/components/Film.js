@@ -9,7 +9,7 @@ import helperEvents from '../utils/events_helper'
 const Film = ({ filmId, type, handler }) => {
   const [film, setFilm] = useState()
   const [urlToPlay, setUrlToPlay] = useState('')
-  const [notification, setNotification] = useState({})
+  const [notification, setNotification] = useState({message: '', type: ''})
 
   const imageBaseUrl = 'http://image.tmdb.org/t/p/w342/'
   useEffect(() => {
