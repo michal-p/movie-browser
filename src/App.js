@@ -12,7 +12,7 @@ function App() {
   const [shows, setShows] = useState([])
   const [family, setFamily] = useState([])
   const [documentary, setDocumentary] = useState([])
-  const [filmId, setFilmId] = useState('')
+  const [filmId, setFilmId] = useState(0)
   const [type, setType] = useState('')
   const [notification, setNotification] = useState({})
   const [newFilter, setNewFilter] = useState('')
@@ -51,17 +51,25 @@ function App() {
 
   const filmHandler = (event) => {
     setType(event.target.dataset.type)
-    setFilmId(event.target.id)
+    setFilmId(parseInt(event.target.id))
   }
 
   const handleFilter = (event) => {
     setNewFilter(event.target.value)
   }
 
-  let filteredMovies = movies.filter(movie => movie.title.toUpperCase().includes(newFilter.toUpperCase()))
-  let filteredShows = shows.filter(show => show.name.toUpperCase().includes(newFilter.toUpperCase()))
-  let filteredFamily = family.filter(fam => fam.title.toUpperCase().includes(newFilter.toUpperCase()))
-  let filteredDocumentary = documentary.filter(doc => doc.name.toUpperCase().includes(newFilter.toUpperCase()))
+  let filteredMovies = movies.filter((movie) =>
+    movie.title.toUpperCase().includes(newFilter.toUpperCase())
+  )
+  let filteredShows = shows.filter((show) =>
+    show.name.toUpperCase().includes(newFilter.toUpperCase())
+  )
+  let filteredFamily = family.filter((fam) =>
+    fam.title.toUpperCase().includes(newFilter.toUpperCase())
+  )
+  let filteredDocumentary = documentary.filter((doc) =>
+    doc.name.toUpperCase().includes(newFilter.toUpperCase())
+  )
 
   if (filmId) {
     return <Film filmId={filmId} type={type} />

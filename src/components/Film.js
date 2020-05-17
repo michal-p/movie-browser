@@ -5,11 +5,12 @@ import Player from './Player'
 import axios from 'axios'
 import Notification from './Notification'
 import helperEvents from '../utils/events_helper'
+import PropTypes from 'prop-types'
 
-const Film = ({ filmId, type, handler }) => {
+const Film = ({ filmId, type }) => {
   const [film, setFilm] = useState()
   const [urlToPlay, setUrlToPlay] = useState('')
-  const [notification, setNotification] = useState({message: '', type: ''})
+  const [notification, setNotification] = useState({ message: '', type: '' })
 
   const imageBaseUrl = 'http://image.tmdb.org/t/p/w342/'
   useEffect(() => {
@@ -67,6 +68,11 @@ const Film = ({ filmId, type, handler }) => {
       {urlToPlay !== '' && <Player url={urlToPlay} />}
     </>
   )
+}
+
+Film.propTypes = {
+  filmId: PropTypes.number,
+  type: PropTypes.any,
 }
 
 export default Film
