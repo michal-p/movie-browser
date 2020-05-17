@@ -1,18 +1,13 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import shaka from 'shaka-player'
 import Notification from './Notification'
+import helperEvents from '../utils/events_helper'
 
 const Player = ({ url }) => {
-  const [notification, setNotification] = useState({})
+  const [notification, setNotification] = useState({message: '', type: ''})
   const videoRef = useRef(null)
   // Install built-in polyfills to patch browser incompatibilities.
   shaka.polyfill.installAll()
-
-  const onError = (error, type = 'note') => {
-    // Log the error.
-    console.error('Error code', error.code, 'object', error)
-    setNotification({ message: error, type: type })
-  }
 
   const initPlayer = useCallback(async () => {
     try {
@@ -20,23 +15,29 @@ const Player = ({ url }) => {
       videoRef.current.requestFullscreen()
       await player.load(url)
     } catch (error) {
-      onError(error)
+      helperEvents.onError(error, 'error')
     }
   }, [url])
 
   useEffect(() => {
-    if (shaka.Player.isBrowserSupported()) {
-      // Check to see if the browser supports the basic APIs Shaka needs.
-      initPlayer()
-    } else {
+    try {
+      if (shaka.Player.isBrowserSupported()) {
+        // Check to see if the browser supports the basic APIs Shaka needs.
+        initPlayer()
+      } else {
+        throw('Browser not supported!')
+      } 
+    } catch (error) {
       // This browser does not have the minimum set of APIs we need.
-      onError('Browser not supported!', 'error')
+      setNotification(helperEvents.onError(error, 'error'))
     }
   }, [initPlayer])
 
   return (
     <>
-      <Notification message={notification.message} type={notification.type} />
+      <div>
+        <Notification message={notification.message} type={notification.type} />
+      </div>
       <video
         ref={videoRef}
         width="640"
