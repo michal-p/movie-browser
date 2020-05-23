@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --verbose",
     "eject": "react-scripts eject",
     "lint": "eslint ."
   },
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "eslint": "^6.6.0",
+    "jest": "^24.9.0",
     "prettier": "2.0.5"
   }
 }
