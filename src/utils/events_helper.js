@@ -15,8 +15,8 @@ const useWindowSize = () => {
 
 const onError = (error, type = 'note') => {
   // Log the error.
-  let errorMessage = error.code ? `Error code ${error.code}` : ''
-  console.error(errorMessage, 'object', error)
+  let errorCode = error.code ? `Error code ${error.code}` : ''
+  console.error(errorCode, 'object', error)
   return { message: error, type: type }
 }
 
