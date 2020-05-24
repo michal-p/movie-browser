@@ -25,8 +25,8 @@ const Player = ({ url }) => {
         // Check to see if the browser supports the basic APIs Shaka needs.
         initPlayer()
       } else {
-        throw('Browser not supported!')
-      } 
+        throw(new Error('Browser not supported!'))
+      }
     } catch (error) {
       // This browser does not have the minimum set of APIs we need.
       setNotification(helperEvents.onError(error, 'error'))
