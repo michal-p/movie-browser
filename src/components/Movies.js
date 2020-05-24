@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import React from 'react'
 import FigureImage from 'react-bootstrap/FigureImage'
 import Carousel from 'react-bootstrap/Carousel'
@@ -23,16 +24,18 @@ const Movies = ({ movies, width, handler, type, name }) => {
                 <Carousel.Item key={`carousel_${i}`}>
                   {chunk.map((film, j) => {
                     return (
-                      <FigureImage
-                        key={`image_${j}`}
-                        id={film.id}
-                        data-type={type}
-                        onClick={handler}
-                        width={image.width}
-                        height={image.height}
-                        alt={`${image.width}x${image.height}`}
-                        src={`${imageBaseUrl}${film.poster_path}`}
-                      />
+                      <Link to={`/${type}/${film.id}`}>
+                        <FigureImage
+                          key={`image_${j}`}
+                          id={film.id}
+                          data-type={type}
+                          //onClick={handler}
+                          width={image.width}
+                          height={image.height}
+                          alt={`${image.width}x${image.height}`}
+                          src={`${imageBaseUrl}${film.poster_path}`}
+                        />
+                      </Link>
                     )
                   })}
                 </Carousel.Item>
