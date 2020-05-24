@@ -3,6 +3,7 @@ import React from 'react'
 import FigureImage from 'react-bootstrap/FigureImage'
 import Carousel from 'react-bootstrap/Carousel'
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 
 const Movies = ({ movies, width, handler, type, name }) => {
   const image = { width: 171, height: 180 }
@@ -45,6 +46,13 @@ const Movies = ({ movies, width, handler, type, name }) => {
       )}
     </>
   )
+}
+Movies.propTypes = {
+  movies: PropTypes.array,
+  width: PropTypes.number,
+  handler: PropTypes.func,
+  type: PropTypes.any,
+  name: PropTypes.string,
 }
 
 export default Movies

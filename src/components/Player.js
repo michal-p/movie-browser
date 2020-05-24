@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import shaka from 'shaka-player'
 import Notification from './Notification'
 import helperEvents from '../utils/events_helper'
+import PropTypes from 'prop-types'
 
 const Player = ({ url }) => {
-  const [notification, setNotification] = useState({message: '', type: ''})
+  const [notification, setNotification] = useState({ message: '', type: '' })
   const videoRef = useRef(null)
   // Install built-in polyfills to patch browser incompatibilities.
   shaka.polyfill.installAll()
@@ -25,7 +26,7 @@ const Player = ({ url }) => {
         // Check to see if the browser supports the basic APIs Shaka needs.
         initPlayer()
       } else {
-        throw(new Error('Browser not supported!'))
+        throw new Error('Browser not supported!')
       }
     } catch (error) {
       // This browser does not have the minimum set of APIs we need.
@@ -47,6 +48,10 @@ const Player = ({ url }) => {
       ></video>
     </>
   )
+}
+
+Player.propTypes = {
+  url: PropTypes.string,
 }
 
 export default Player

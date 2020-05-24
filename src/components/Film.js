@@ -6,6 +6,7 @@ import Player from './Player'
 import axios from 'axios'
 import Notification from './Notification'
 import helperEvents from '../utils/events_helper'
+import PropTypes from 'prop-types'
 
 const Film = ({ handler }) => {
   const filmId = useParams().id
@@ -70,6 +71,11 @@ const Film = ({ handler }) => {
       {urlToPlay !== '' && <Player url={urlToPlay} />}
     </>
   )
+}
+
+Film.propTypes = {
+  filmId: PropTypes.number,
+  type: PropTypes.any,
 }
 
 export default Film
