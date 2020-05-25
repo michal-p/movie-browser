@@ -59,23 +59,25 @@ const Film = ({ handler }) => {
             <p>
               <a href={film.homepage}>{film.homepage}</a>
             </p>
-            <Button variant="secondary" onClick={playerHandler}>
-              Play
-            </Button>
+            {urlToPlay !== '' ? (
+              <Player url={urlToPlay} />
+            ) : (
+              <Button variant="secondary" onClick={playerHandler}>
+                Play
+              </Button>
+            )}
           </section>
           <div className="flex-item">
             <Image src={`${imageBaseUrl}${film.backdrop_path}`} />
           </div>
         </div>
       )}
-      {urlToPlay !== '' && <Player url={urlToPlay} />}
     </>
   )
 }
 
 Film.propTypes = {
-  filmId: PropTypes.number,
-  type: PropTypes.any,
+  handler: PropTypes.func,
 }
 
 export default Film

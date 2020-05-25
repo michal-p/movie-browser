@@ -11,13 +11,9 @@ const Player = ({ url }) => {
   shaka.polyfill.installAll()
 
   const initPlayer = useCallback(async () => {
-    try {
-      const player = new shaka.Player(videoRef.current)
-      videoRef.current.requestFullscreen()
-      await player.load(url)
-    } catch (error) {
-      helperEvents.onError(error, 'error')
-    }
+    const player = new shaka.Player(videoRef.current)
+    videoRef.current.requestFullscreen()
+    await player.load(url)
   }, [url])
 
   useEffect(() => {

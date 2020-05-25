@@ -5,7 +5,7 @@ import Carousel from 'react-bootstrap/Carousel'
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 
-const Movies = ({ movies, width, handler, type, name }) => {
+const Movies = ({ movies, width, type, name }) => {
   const image = { width: 171, height: 180 }
   const chunksAmount = Math.floor((width * 0.85) / image.width)
   let imageBaseUrl = 'http://image.tmdb.org/t/p/w342/'
@@ -24,12 +24,10 @@ const Movies = ({ movies, width, handler, type, name }) => {
                 <Carousel.Item key={`carousel_${i}`}>
                   {chunk.map((film, j) => {
                     return (
-                      <Link to={`/${type}/${film.id}`}>
+                      <Link key={`image_${j}`} to={`/${type}/${film.id}`}>
                         <FigureImage
-                          key={`image_${j}`}
                           id={film.id}
                           data-type={type}
-                          //onClick={handler}
                           width={image.width}
                           height={image.height}
                           alt={`${image.width}x${image.height}`}
@@ -50,7 +48,6 @@ const Movies = ({ movies, width, handler, type, name }) => {
 Movies.propTypes = {
   movies: PropTypes.array,
   width: PropTypes.number,
-  handler: PropTypes.func,
   type: PropTypes.any,
   name: PropTypes.string,
 }
