@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Movies from './Movies'
-import Film from './Film'
 import Notification from './Notification'
 import Search from './Search'
 import helperEvents from '../utils/events_helper'
@@ -12,8 +11,6 @@ function Home() {
   const [shows, setShows] = useState([])
   const [family, setFamily] = useState([])
   const [documentary, setDocumentary] = useState([])
-  const [filmId, setFilmId] = useState('')
-  const [type, setType] = useState('')
   const [notification, setNotification] = useState({})
   const [newFilter, setNewFilter] = useState('')
 
@@ -49,11 +46,6 @@ function Home() {
     padding: 0,
   }
 
-  const filmHandler = (event) => {
-    setType(event.target.dataset.type)
-    setFilmId(event.target.id)
-  }
-
   const handleFilter = (event) => {
     setNewFilter(event.target.value)
   }
@@ -71,9 +63,6 @@ function Home() {
     doc.name.toUpperCase().includes(newFilter.toUpperCase())
   )
 
-  // if (filmId) {
-  //   return <Film filmId={filmId} type={type} />
-  // } else {
   return (
     <div className="App">
       {/* TODO remove */}
@@ -88,7 +77,6 @@ function Home() {
             type="movie"
             movies={filteredMovies}
             width={width}
-            handler={filmHandler}
             name="Popular Movies"
           />
         </div>
@@ -97,7 +85,6 @@ function Home() {
             type="tv"
             movies={filteredShows}
             width={width}
-            handler={filmHandler}
             name="Popular Series"
           />
         </div>
@@ -106,7 +93,6 @@ function Home() {
             type="movie"
             movies={filteredFamily}
             width={width}
-            handler={filmHandler}
             name="Family"
           />
         </div>
@@ -115,14 +101,12 @@ function Home() {
             type="tv"
             movies={filteredDocumentary}
             width={width}
-            handler={filmHandler}
             name="Documentary"
           />
         </div>
       </main>
     </div>
   )
-  // }
 }
 
 export default Home
